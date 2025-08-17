@@ -3,10 +3,7 @@
 {% block content  %}
     <h2 align="center"> Home Page</h2>
 
-    <div>{{dict.name}}</div>
-
-    <div>{{rooms}}</div>
     {% for room in rooms  %}
-       <a href="{% url 'index' room.id %}" > <p>{{room.name}}</p> </a>
+       <p>{{forloop.counter}} - @{{room.host.username}}  ||  <a href="{% url 'index' room.id %}">{{room.name}} </a> ||  {{room.topic}}</p> 
     {% endfor %}
 {% endblock %}

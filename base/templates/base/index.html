@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2 align="center"> Hello Coder</h2>
+
+          <p style="color: rgb(5, 41, 131);"> {{rooms.topic}} || {{rooms.name}}</p>
+        <a href="{% url 'home'%}"> home </a>
+  
+{% endblock %}
+
+
