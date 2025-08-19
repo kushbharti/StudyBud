@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    {% if request.resolver_match.url_name == 'update-room' %}
+        <input type="submit" value="Update Room" />
+    {% else %}
+        <input type="submit" value="Create Room" />
+    {% endif %}
+</form>
+
+{% endblock  %}

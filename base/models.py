@@ -14,11 +14,14 @@ class Topic(models.Model):
 
 class Room (models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, related_name='topic')
     name = models.CharField(max_length=200)
     description = models.TextField(null=True , blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_on','-updated_on']
     
     def __str__(self):
         return self.name
