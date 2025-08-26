@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
-from .models import Room, Topic
+from .models import Room, Topic,Message
 from .forms import RoomForm
 from django.http import HttpResponse
 from django.db.models import Q ,Count
@@ -43,6 +43,7 @@ def loginPage(request):
 def logoutUser(request):
    logout(request)
    return redirect('login')
+
 
 
 def registerPage(request):
@@ -87,10 +88,21 @@ def home(request):
 def index(request,pk):
    try:
       room = Room.objects.get(id=pk)
-      return render(request,'base/index.html',{'rooms':room})
+      room_messages = room.message_set.all().order_by('-created_on')
+      
+      if request.method == 'POST':
+         message = Message.objects.create(user =request.user,
+                                          room = room,
+                                          body=request.POST.get('body')
+                                          )
+         return redirect('index',pk=room.id)
+      
+      context = {'room':room,'room_messages':room_messages}
+      return render(request,'base/index.html',context)
    except Exception as e:
       print('Error', e)
       return HttpResponse(f"Something went wrong: {e}")
+
 
 
 @login_required(login_url='login')
@@ -122,6 +134,7 @@ def delete_room(request,pk):
       return HttpResponse("Somethinge went wronge")
    
    return render(request,'base/delete_room.html',{'obj':room})
+
 
 
 @login_required(login_url='login')
