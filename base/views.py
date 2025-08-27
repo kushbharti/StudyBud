@@ -73,11 +73,15 @@ def home(request):
       
       rooms = Room.objects.filter(Q(topic__name__icontains = q)|
                                   Q(name__icontains = q) |
-                                  Q(description__icontains = q))
+                                  Q(description__icontains = q)
+                                  )
      
       room_count = rooms.count()
       topics = Topic.objects.annotate(room_count=Count('topic',filter=Q(topic__in=rooms)))
-      context = {'rooms':rooms,'topics':topics,'room_count':room_count}
+      
+      room_msgs = Message.objects.filter(Q(room__topic__name__icontains =q))
+      
+      context = {'rooms':rooms,'topics':topics,'room_count':room_count,'room_msgs':room_msgs}
    except Exception as e :
       print('Error',e)
       return HttpResponse(f'something Wrong {e}')
