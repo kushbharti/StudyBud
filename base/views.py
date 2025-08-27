@@ -65,7 +65,6 @@ def registerPage(request):
    return render(request,'base/login_register.html',context)
 
 
-
 @login_required(login_url='login')
 def home(request):   
    try:
@@ -108,6 +107,14 @@ def index(request,pk):
       print('Error', e)
       return HttpResponse(f"Something went wrong: {e}")
 
+
+def userProfile(request,pk):
+   user = User.objects.get(id=pk)
+   rooms = user.room_set.all()
+   room_msgs = user.message_set.all()
+   topics = Topic.objects.all()   
+   context = {'user':user,'rooms':rooms,'room_msgs':room_msgs,'topics':topics}
+   return render(request,'base/profile.html',context)
 
 
 @login_required(login_url='login')
