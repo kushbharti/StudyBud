@@ -65,6 +65,7 @@ def registerPage(request):
    return render(request,'base/login_register.html',context)
 
 
+
 @login_required(login_url='login')
 def home(request):   
    try:
@@ -108,6 +109,7 @@ def index(request,pk):
       return HttpResponse(f"Something went wrong: {e}")
 
 
+
 def userProfile(request,pk):
    user = User.objects.get(id=pk)
    rooms = user.room_set.all()
@@ -117,6 +119,7 @@ def userProfile(request,pk):
    return render(request,'base/profile.html',context)
 
 
+
 @login_required(login_url='login')
 def create_room(request):
    form = RoomForm()
@@ -124,7 +127,9 @@ def create_room(request):
       if request.method == 'POST':
          form = RoomForm(request.POST)
          if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             return redirect('home')
       context = {'form':form}
    except Exception as e:
