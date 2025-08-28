@@ -5,9 +5,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from .models import Room, Topic,Message
-from .forms import RoomForm
+from .forms import RoomForm,UserForm
 from django.http import HttpResponse
 from django.db.models import Q ,Count
+
 
 # Create your views here.
 
@@ -77,7 +78,7 @@ def home(request):
                                   )
      
       room_count = rooms.count()
-      topics = Topic.objects.annotate(room_count=Count('topic',filter=Q(topic__in=rooms)))
+      topics = Topic.objects.annotate(room_count=Count('rooms',filter=Q(rooms__in=rooms)))
       
       room_msgs = Message.objects.filter(Q(room__topic__name__icontains =q))
       
@@ -88,16 +89,15 @@ def home(request):
    return render(request,'base/home.html',context)
 
 
-
 def index(request,pk):
    try:
       room = Room.objects.get(id=pk)
       room_messages = room.message_set.all().order_by('-created_on')
       participants = room.participants.all()
       if request.method == 'POST':
-         message = Message.objects.create(user =request.user,
+         message = Message.objects.create(user = request.user,
                                           room = room,
-                                          body=request.POST.get('body')
+                                          body = request.POST.get('body')
                                           )
          room.participants.add(request.user)
          return redirect('index',pk=room.id)
@@ -123,15 +123,20 @@ def userProfile(request,pk):
 @login_required(login_url='login')
 def create_room(request):
    form = RoomForm()
+   topics = Topic.objects.all()
    try:
       if request.method == 'POST':
-         form = RoomForm(request.POST)
-         if form.is_valid():
-            room = form.save(commit=False)
-            room.host = request.user
-            room.save()
-            return redirect('home')
-      context = {'form':form}
+         topic_name = request.POST.get('topic')
+         topic, created_on = Topic.objects.get_or_create(name=topic_name)
+         Room.objects.create(
+            host=request.user,
+            topic = topic,
+            name = request.POST.get('name'),
+            description = request.POST.get('description')
+         )
+       
+         return redirect('home')
+      context = {'form':form,'topics':topics}
    except Exception as e:
       print('Error', e)
       return HttpResponse("Error Occurs")
@@ -158,16 +163,19 @@ def delete_room(request,pk):
 def update_room(request,pk):
    room = Room.objects.get(id=pk)
    form = RoomForm(instance=room)
-   
+   topic = Topic.objects.all()
    if request.user != room.host:
       return HttpResponse('Not Allowed')
    try:
       if request.POST =='POST':
-         form = RoomForm(request.POST, instance=room)
-         if form.is_valid():
-            form.save()
-            return redirect('home')
-      context = {'form':form}
+         topic_name = request.POST.get('topics')
+         topic, created = Topic.objects.get_or_create(name=topic_name)
+         room.topic = topic
+         room.name = request.POST.get('name')
+         room.description = request.POST.get('description')
+         room.save()
+         return redirect('home')
+      context = {'form':form,'topics':topic,'room':room}
    except Exception as e:
       print('Error', e)
       return HttpResponse("Somethinge went wronge") 
@@ -189,4 +197,20 @@ def deleteMsg(request,pk):
       print('Error', e)
       return HttpResponse("Somethinge went wronge")
    return render(request,'base/delete_room.html',{'obj':msg})
+
+
+@login_required(login_url='login')
+def updateUser(request):
+   user = request.user
+   form = UserForm(instance=user)
+   try:
+      if request.method == 'POST':
+         form = UserForm(request.POST,instance=user)
+         if form.is_valid(): 
+           form.save() 
+           return redirect('user-profile',pk=user.id)
+   except Exception as e:
+      print('Error', e)
+      return HttpResponse("Somethinge went wronge")
+   return render(request,'base/update-user.html',{'form':form})
    
