@@ -213,4 +213,19 @@ def updateUser(request):
       print('Error', e)
       return HttpResponse("Somethinge went wronge")
    return render(request,'base/update-user.html',{'form':form})
+
+
+
+def topicsPage(request):
+   q = request.GET.get('q')  if request.GET.get('q') != None else ""
+   
+   topics = Topic.objects.filter(Q(name__icontains =q)).annotate(room_count=Count('rooms'))
+   return render(request,'base/topics.html',{'topics':topics}) 
+
+
+def activityPage(request):
+   room_msg = Message.objects.all()
+   return render(request,'base/activity.html',{'room_msg':room_msg})  
+   
+   
    
