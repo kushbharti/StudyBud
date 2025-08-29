@@ -9,13 +9,12 @@ class User(AbstractUser):
     email  = models.EmailField(unique=True,null=True)
     bio = models.TextField(null=True)
     
-    avatar  = models.ImageField(null=True,default='avatar.svg',upload_to='images/')
+    avatar  = models.ImageField(null=True,default='avatar.svg',upload_to='')
     
+   # yfdfgsSDTGGSCV@#$%5454
    
     REQUIRED_FIELDS = []
     
-
-
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
