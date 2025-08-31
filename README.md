@@ -17,7 +17,7 @@
 <ul>
   <li><strong>Backend:</strong> Python, Django</li>
   <li><strong>Frontend:</strong> HTML, CSS, Django Templates</li>
-  <li><strong>Database:</strong> SQLite (can be upgraded to PostgreSQL/MySQL)</li>
+  <li><strong>Database:</strong> SQLite (can be upgraded to MySQL)</li>
   <li><strong>Tools:</strong> pip, venv</li>
 </ul>
 
