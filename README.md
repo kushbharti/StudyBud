@@ -17,28 +17,38 @@
 <ul>
   <li><strong>Backend:</strong> Python, Django</li>
   <li><strong>Frontend:</strong> HTML, CSS, Django Templates</li>
-  <li><strong>Database:</strong> SQLite (can be upgraded to MySQL)</li>
+  <li><strong>Database:</strong> SQLite (can be upgraded to PostgreSQL/MySQL)</li>
   <li><strong>Tools:</strong> pip, venv</li>
 </ul>
 
 <h2>📁 Project Structure</h2>
 <pre>
 studybud/
-├── base/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── forms.py
-│   └── templates/
+├── base/                     # Main app
+│   ├── models.py             # Database models
+│   ├── views.py              # Views (controllers)
+│   ├── urls.py               # App-level routes
+│   ├── forms.py              # Django forms
+│   └── templates/            # HTML templates
 │       └── base/
 │           ├── home.html
 │           ├── room.html
 │           ├── login_register.html
 │           └── profile.html
-├── studybud/
-│   └── settings.py
-├── manage.py
-├── requirements.txt
+│
+├── studybud/                 # Project settings
+│   ├── settings.py           # Django settings
+│   ├── urls.py               # Root URL configuration
+│   └── wsgi.py               # WSGI entry point
+│
+├── static/                   # Static files (CSS, JS, images)
+│
+├── templates/                # Base/global templates
+│   └── main.html
+│
+├── manage.py                 # Django management script
+├── requirements.txt          # Project dependencies
+└── README.md                 # Project documentation
 </pre>
 
 <h2>🚀 Installation</h2>
@@ -66,7 +76,7 @@ python manage.py runserver
 <h2>🔗 Main Pages</h2>
 <br>
 
- <br><br>
+<img width="1897" height="1005" alt="StudyBud Homepage" src="https://github.com/user-attachments/assets/example-homepage.png" /> <br><br>
 
 <h3>🏠 Home</h3>
 <ul>
