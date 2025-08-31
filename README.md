@@ -24,31 +24,41 @@
 <h2>📁 Project Structure</h2>
 <pre>
 studybud/
-├── base/                     # Main app
-│   ├── models.py             # Database models
-│   ├── views.py              # Views (controllers)
-│   ├── urls.py               # App-level routes
-│   ├── forms.py              # Django forms
-│   └── templates/            # HTML templates
+├── base/                # Main Django app
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   ├── views.py
+│   └── templates/       # HTML templates for base app
 │       └── base/
+│           ├── activity.html
+│           ├── create_room.html
+│           ├── delete_room.html
+│           ├── feed_components.html
 │           ├── home.html
-│           ├── room.html
 │           ├── login_register.html
-│           └── profile.html
+│           ├── profile.html
+│           ├── topics.html
+│           └── update-user.html
 │
-├── studybud/                 # Project settings
-│   ├── settings.py           # Django settings
-│   ├── urls.py               # Root URL configuration
-│   └── wsgi.py               # WSGI entry point
+├── StudyBud/            # Project settings
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
 │
-├── static/                   # Static files (CSS, JS, images)
+├── static/              # CSS, JS, images
 │
-├── templates/                # Base/global templates
-│   └── main.html
+├── templates/           # Base templates
+│   ├── main.html
+│   └── navbar.html
 │
-├── manage.py                 # Django management script
-├── requirements.txt          # Project dependencies
-└── README.md                 # Project documentation
+├── manage.py
+├── requirements.txt
+└── README.md
 </pre>
 
 <h2>🚀 Installation</h2>
