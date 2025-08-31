@@ -66,7 +66,7 @@ python manage.py runserver
 <h2>🔗 Main Pages</h2>
 <br>
 
-<img width="1897" height="1005" alt="StudyBud Homepage" src="https://github.com/user-attachments/assets/example-homepage.png" /> <br><br>
+ <br><br>
 
 <h3>🏠 Home</h3>
 <ul>
