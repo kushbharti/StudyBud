@@ -145,3 +145,8 @@ python manage.py runserver
   <li>[ ] Add pagination and filters</li>
   <li>[ ] Deploy to cloud (Heroku/AWS)</li>
 </ul>
+
+
+
+<h2>📜 License</h2>
+<p>This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
